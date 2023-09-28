@@ -1,12 +1,12 @@
 import Router from "@koa/router";
 
-export const homeRouter = new Router();
+export const pageRouter = new Router();
 
-homeRouter.get("/", async (ctx) => {
+pageRouter.get("/", async (ctx) => {
   ctx.body = ctx.render("home", { title: "Home" });
 });
 
-homeRouter.get("/:id", async (ctx) => {
+pageRouter.get("/:id", async (ctx) => {
   try {
     const { id } = ctx.params;
 
@@ -28,7 +28,18 @@ homeRouter.get("/:id", async (ctx) => {
 
     ctx.redirect(item.props.link);
   } catch (err) {
-    console.error(err);
-    ctx.throw(500, "Internal Server Error");
+    ctx.throw(500, err.message);
   }
+});
+
+pageRouter.get("/page/about", async (ctx) => {
+  ctx.body = ctx.render("about", { title: "About" });
+});
+
+pageRouter.get("/page/login", (ctx) => {
+  ctx.body = ctx.render("login", { title: "Login" });
+});
+
+pageRouter.get("/page/signup", (ctx) => {
+  ctx.body = ctx.render("signup", { title: "Sign up" });
 });

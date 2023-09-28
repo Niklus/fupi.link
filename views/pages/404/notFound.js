@@ -1,6 +1,7 @@
-import nav from "./components/nav.js";
+import nav from "../../components/nav.js";
+import footer from "../../components/footer.js";
 
-const about = ({ title, nonce }) => {
+export const notFound = ({ title, nonce }) => {
   return /*html*/ `<title>${title}</title>
     <style nonce="${nonce}">
       ${style}
@@ -9,17 +10,16 @@ const about = ({ title, nonce }) => {
     <body>
       ${nav({ title })}
       <main>
-        <h1>${title}</h1>
+        <h1>${title}: 404</h1>
       </main>
+      ${footer}
     </body>
     </html>
   `;
 };
 
 const style = /* css */ `
-  h1 {
+  body {
     text-align: center;
-  }
-`;
-
-export default about;
+    color: crimson;
+  }`;

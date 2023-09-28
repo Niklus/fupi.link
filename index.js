@@ -3,14 +3,16 @@ import logger from "koa-logger";
 import serve from "koa-static";
 import { koaBody } from "koa-body";
 import compress from "koa-compress";
-import render from "./views/render.js";
 import security from "./middleware/security.js";
-import { homeRouter, aboutRouter, linkRouter } from "./router/index.js";
-import notFound from "./middleware/notFound.js";
+import * as router from "./router/index.js";
+import notFoundHandler from "./middleware/notFoundHandler.js";
+import errorHandler from "./middleware/errorHandler.js";
 import db from "./db/db.js";
 import "dotenv/config.js";
+import views from "./views/index.js";
 
 const app = new koa();
+const PORT = process.env.PORT || 3000;
 
 app
   .use(db)
@@ -18,15 +20,16 @@ app
   .use(security)
   .use(logger())
   .use(serve("./public"))
-  .use(render)
+  .use(views)
   .use(koaBody())
-  .use(homeRouter.routes())
-  .use(homeRouter.allowedMethods())
-  .use(aboutRouter.routes())
-  .use(aboutRouter.allowedMethods())
-  .use(linkRouter.routes())
-  .use(linkRouter.allowedMethods())
-  .use(notFound)
-  .listen(3000, () => {
-    console.log("Listening on port 3000");
+  .use(router.pageRouter.routes())
+  .use(router.pageRouter.allowedMethods())
+  .use(router.linkRouter.routes())
+  .use(router.linkRouter.allowedMethods())
+  .use(router.userRouter.routes())
+  .use(router.userRouter.allowedMethods())
+  .use(notFoundHandler)
+  .on("error", errorHandler)
+  .listen(PORT, () => {
+    console.log(`Listening on port ${PORT}`);
   });

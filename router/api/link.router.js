@@ -48,12 +48,11 @@ linkRouter.post("/", async (ctx) => {
 
     ctx.redirect("/?shortLink=" + props.shortLink);
   } catch (err) {
-    console.error(err);
-    ctx.throw(500, "Internal Server Error");
+    ctx.throw(500, err.message);
   }
 });
 
-/*linkRouter.get("/", async (ctx) => {
+/*linkApiRouter.get("/", async (ctx) => {
   try {
     const collection = await ctx.db.collection("links");
     const items = await collection.list();
