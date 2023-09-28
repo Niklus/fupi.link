@@ -1,4 +1,5 @@
-import koa from "koa";
+import Koa from "koa";
+import vhost from "koa-virtual-host";
 import logger from "koa-logger";
 import serve from "koa-static";
 import { koaBody } from "koa-body";
@@ -8,28 +9,44 @@ import * as router from "./router/index.js";
 import notFoundHandler from "./middleware/notFoundHandler.js";
 import errorHandler from "./middleware/errorHandler.js";
 import db from "./db/db.js";
-import "dotenv/config.js";
 import views from "./views/index.js";
+import "dotenv/config.js";
 
-const app = new koa();
 const PORT = process.env.PORT || 3000;
 
-app
-  .use(db)
-  .use(compress())
-  .use(security)
-  .use(logger())
-  .use(serve("./public"))
-  .use(views)
+// Apps
+const app_redir = new Koa();
+const app_landing = new Koa();
+const app_host = new Koa();
+
+// Link Redirector
+app_redir
+  .use(router.redirectRouter.routes())
+  .use(router.redirectRouter.allowedMethods());
+
+// Landing Page
+app_landing
   .use(koaBody())
   .use(router.pageRouter.routes())
   .use(router.pageRouter.allowedMethods())
   .use(router.linkRouter.routes())
   .use(router.linkRouter.allowedMethods())
   .use(router.userRouter.routes())
-  .use(router.userRouter.allowedMethods())
+  .use(router.userRouter.allowedMethods());
+
+// Host
+app_host
+  .use(db)
+  .use(compress())
+  .use(security)
+  .use(logger())
+  .use(serve("./public"))
+  .use(views)
+  .use(vhost(/localhost/i, app_redir)) // for fupi.link
+  .use(vhost("127.0.0.1", app_landing)) // for fupilink.com
   .use(notFoundHandler)
-  .on("error", errorHandler)
-  .listen(PORT, () => {
-    console.log(`Listening on port ${PORT}`);
-  });
+  .on("error", errorHandler);
+
+app_host.listen(PORT, () => {
+  console.log(`Listening on port ${PORT}`);
+});

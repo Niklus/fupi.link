@@ -37,8 +37,10 @@ userRouter.post("/signup", async (ctx) => {
     const salt = await bcrypt.genSalt(10);
     const hash = await bcrypt.hash(password, salt);
 
-    const { props } = await ctx.db.collection("users").set(email, {
-      _id: nanoid(10),
+    const _id = nanoid(10);
+
+    const { props } = await ctx.db.collection("users").set(_id, {
+      _id,
       email,
       password: hash,
     });
