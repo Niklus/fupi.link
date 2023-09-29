@@ -1,5 +1,5 @@
-import { nanoid } from "nanoid";
-import helmet from "koa-helmet";
+import { nanoid } from "../deps.js";
+import { helmet } from "../deps.js";
 
 const security = (ctx, next) => {
   ctx.state.nonce = nanoid(32);

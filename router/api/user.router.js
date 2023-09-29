@@ -1,8 +1,8 @@
-import jwt from "jsonwebtoken";
-import isEmail from "validator/lib/isEmail.js";
-import Router from "@koa/router";
-import bcrypt from "bcrypt";
-import { nanoid } from "nanoid";
+import { jwt } from "../../deps.js";
+import { isEmail } from "../../deps.js";
+import { Router } from "../../deps.js";
+import { bcrypt } from "../../deps.js";
+import { nanoid } from "../../deps.js";
 
 const createToken = (_id) => {
   return jwt.sign({ _id }, process.env.JWT_SECRET, { expiresIn: "3d" });
@@ -17,14 +17,14 @@ userRouter.post("/signup", async (ctx) => {
     const { email, password } = ctx.request.body;
 
     if (!isEmail(email)) {
-      return ctx.redirect("/page/signup?error=Invalid Email");
+      return ctx.redirect("/page/signup?error=Invalid Email"); // Test this later
     }
 
     if (password.length < 8) {
       return ctx.redirect("/page/signup?error=Password too short");
     }
 
-    const collection = await ctx.db.collection("users");
+    /*const collection = await ctx.db.collection("users");
 
     const items = await collection.filter({
       email,
@@ -50,7 +50,7 @@ userRouter.post("/signup", async (ctx) => {
     ctx.cookies.set("token", token, {
       httpOnly: true,
       maxAge: 1000 * 60 * 60 * 24 * 3,
-    });
+    });*/
 
     // TODO : Continue here: Create user page and redirect to it
 
@@ -69,7 +69,7 @@ userRouter.get("/logout", async (ctx) => {
 userRouter.post("/login", async (ctx) => {});
 
 // Use auth middleware to protect this route
-userRouter.get("/delete", async (ctx) => {
+userRouter.del("/delete", async (ctx) => {
   const { email } = ctx.request.body;
 
   if (!isEmail(email)) {
@@ -77,9 +77,9 @@ userRouter.get("/delete", async (ctx) => {
   }
 
   try {
-    const collection = await ctx.db.collection("users");
+    /* const collection = await ctx.db.collection("users");
     const item = await collection.delete(email);
-    console.log(JSON.stringify(item, null, 3));
+    console.log(JSON.stringify(item, null, 3));*/
     ctx.redirect("/page/signup?success=true");
   } catch (err) {
     ctx.throw(500, err);

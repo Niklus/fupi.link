@@ -1,6 +1,6 @@
-import jwt from "jsonwebtoken";
+import { jwt } from "../deps.js";
 
-const auth = async (ctx, next) => {
+export const auth = async (ctx, next) => {
   const { authorization } = ctx.request.headers;
 
   if (!authorization) {
@@ -12,18 +12,16 @@ const auth = async (ctx, next) => {
   try {
     const { _id } = jwt.verify(token, process.env.JWT_SECRET);
 
-    ctx.state.user = await ctx.db.collection("users").get(_id);
+    // ctx.state.user = await ctx.db.collection("users").get(_id);
 
     // If user doesn't exist, return error even though token is valid
     if (!ctx.state.user) {
       return ctx.throw(401, "Request is not authorized");
     }
 
-    await next();
+    return next(); // Do I need to return next() here?
   } catch (error) {
-    console.error(error);
-    ctx.throw(401, "Request is not authorized");
+    console.error(error.message, error.stack);
+    ctx.body = "Server Error";
   }
 };
-
-export default auth;

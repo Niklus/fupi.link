@@ -1,5 +1,5 @@
-import { minify } from "terser";
-import CleanCSS from "clean-css";
+import { minify } from "../../deps.js";
+import { CleanCSS } from "../../deps.js";
 
 export const makeScript = async (func) => {
   const iife = `(${func.toString()})()`;
