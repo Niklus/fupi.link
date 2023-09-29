@@ -8,4 +8,4 @@ import {
 export const redirectRouter = new Router();
 
 redirectRouter.get("/", goToLandingPage);
-redirectRouter.get("/:id", goToLink);
+redirectRouter.get("/:linkId", goToLink);

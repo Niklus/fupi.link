@@ -24,33 +24,38 @@ userRouter.post("/signup", async (ctx) => {
       return ctx.redirect("/page/signup?error=Password too short");
     }
 
-    /*const collection = await ctx.db.collection("users");
+    const result = await ctx.kv.get(["users-by-email", email]);
 
-    const items = await collection.filter({
-      email,
-    });
-
-    if (items.results.length) {
+    if (result?.value) {
       return ctx.redirect("/page/signup?error=Email already exists");
     }
 
     const salt = await bcrypt.genSalt(10);
     const hash = await bcrypt.hash(password, salt);
-
     const _id = nanoid(10);
 
-    const { props } = await ctx.db.collection("users").set(_id, {
+    const user = {
       _id,
       email,
       password: hash,
-    });
+    };
 
-    const token = createToken(props._id);
+    const res = await ctx.kv
+      .atomic()
+      .set(["users", _id], user)
+      .set(["users-by-email", email], user)
+      .commit();
+
+    if (!res.ok) {
+      throw new Error("Failed to create link");
+    }
+
+    const token = createToken(_id);
 
     ctx.cookies.set("token", token, {
       httpOnly: true,
       maxAge: 1000 * 60 * 60 * 24 * 3,
-    });*/
+    });
 
     // TODO : Continue here: Create user page and redirect to it
 
