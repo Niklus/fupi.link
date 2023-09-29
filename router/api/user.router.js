@@ -5,7 +5,7 @@ import { bcrypt } from "../../deps.js";
 import { nanoid } from "../../deps.js";
 
 const createToken = (_id) => {
-  return jwt.sign({ _id }, process.env.JWT_SECRET, { expiresIn: "3d" });
+  return jwt.sign({ _id }, Deno.env.get("JWT_SECRET"), { expiresIn: "3d" });
 };
 
 export const userRouter = new Router({

@@ -1,4 +1,3 @@
-// Put in deps.js later
 import { Koa } from "./deps.js";
 import { logger } from "./deps.js";
 import { serve } from "./deps.js";
