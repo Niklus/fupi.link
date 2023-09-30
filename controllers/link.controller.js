@@ -11,11 +11,16 @@ export const createLink = async (ctx) => {
       return ctx.redirect("/?message=" + "Invalid URL");
     }
 
-    let result = await ctx.kv.get([userId, body.link]);
+    let result = await ctx.kv.get(["link-by-user", userId, body.link]);
 
     if (result?.value) {
       console.log("Found existing link");
-      return ctx.redirect("/?shortLink=" + result.value.shortLink);
+
+      if (userId === "anonymous") {
+        return ctx.redirect("/?shortLink=" + result.value.shortLink);
+      } else {
+        return ctx.redirect("/user?shortLink=" + result.value.shortLink);
+      }
     }
 
     let idExists = true;
@@ -40,12 +45,14 @@ export const createLink = async (ctx) => {
     };
 
     const primaryKey = ["links", linkId];
-    const secondaryKey = [userId, body.link];
+    const secondaryKey = ["link-by-user", userId, body.link];
 
     console.log("Creating new link");
 
     const res = await ctx.kv
       .atomic()
+      .check({ key: primaryKey, versionstamp: null })
+      .check({ key: secondaryKey, versionstamp: null })
       .set(primaryKey, link)
       .set(secondaryKey, link)
       .commit();
@@ -54,7 +61,11 @@ export const createLink = async (ctx) => {
       throw new Error("Failed to create link");
     }
 
-    ctx.redirect(`/?shortLink=${shortLink}`);
+    if (userId === "anonymous") {
+      return ctx.redirect("/?shortLink=" + shortLink);
+    } else {
+      return ctx.redirect("/user?shortLink=" + shortLink);
+    }
   } catch (err) {
     ctx.throw(500, err.message);
   }

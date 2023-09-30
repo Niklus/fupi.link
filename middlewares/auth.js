@@ -1,29 +1,27 @@
 import { jwt } from "../deps.js";
 
 export const auth = async (ctx, next) => {
-  const { authorization } = ctx.request.headers;
+  // Get token from header
+  const token = ctx.cookies.get("token");
 
-  if (!authorization) {
-    return ctx.throw(401, "Authorization token required");
+  // Check if not token exists
+  if (!token) {
+    return ctx.redirect("/login?msg=Not authorized");
   }
-
-  const token = authorization.split(" ")[1];
 
   try {
     const { _id } = jwt.verify(token, Deno.env.get("JWT_SECRET"));
+    const result = await ctx.kv.get(["user", _id]);
 
-    let result = await ctx.kv.get(["users", _id]);
-
-    // If user doesn't exist, return error even though token is valid
-    if (!result?.value) {
-      return ctx.throw(401, "Request is not authorized");
+    if (result?.value) {
+      ctx.state.user = result.value;
+      return next();
+    } else {
+      ctx.throw(401, "Request is not authorized");
     }
-
-    ctx.state.user = result.value;
-
-    return next(); // Do I need to return next() here?
   } catch (error) {
     console.error(error.message, error.stack);
-    ctx.body = "Server Error";
+    ctx.cookies.set("token", null, { httpOnly: true, maxAge: -1 });
+    ctx.redirect("/login?msg=session expired");
   }
 };

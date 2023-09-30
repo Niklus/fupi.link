@@ -5,7 +5,6 @@ export const goToLandingPage = (ctx) => {
 export const goToLink = async (ctx) => {
   try {
     const { linkId } = ctx.params;
-
     const item = await ctx.kv.get(["links", linkId]);
 
     if (!item?.value) {
@@ -14,14 +13,30 @@ export const goToLink = async (ctx) => {
       );
     }
 
-    const { clicks, ...rest } = item.value;
+    const { clicks, link, userId, shortLink } = item.value;
 
-    await ctx.kv.set(["links", linkId], {
+    const record = {
       clicks: clicks + 1,
-      ...rest,
-    });
+      link,
+      userId,
+      linkId,
+      shortLink,
+    };
 
-    ctx.redirect(item.value.link);
+    const primaryKey = ["links", linkId];
+    const secondaryKey = ["link-by-user", userId, link];
+
+    const res = await ctx.kv
+      .atomic()
+      .set(primaryKey, record)
+      .set(secondaryKey, record)
+      .commit();
+
+    if (!res.ok) {
+      throw new Error("Failed to create link");
+    }
+
+    ctx.redirect(link);
   } catch (err) {
     ctx.throw(500, err.message);
   }

@@ -6,7 +6,7 @@ export const linkRouter = new Router({
   prefix: "/api/links",
 });
 
+// create public link
 linkRouter.post("/", createLink);
-
-// protected routes
+// create private link
 linkRouter.post("/user", auth, createLink);

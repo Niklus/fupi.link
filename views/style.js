@@ -22,13 +22,20 @@ const css = /* css */ `
     padding: 50px;
   }
 
-  footer {
+  .links { 
+    max-width: 970px;
+    margin: 0 auto;
+    padding-right: 20px;
+    padding-left: 20px;
+  }
+
+  /*footer {
     position: absolute;
     bottom: 0;
     width: 100%;
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: center;*/
   }
 `;
 

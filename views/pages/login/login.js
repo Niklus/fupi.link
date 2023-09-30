@@ -1,5 +1,7 @@
 import nav from "../../components/nav.js";
 import footer from "../../components/footer.js";
+import { script } from "./script.js";
+import { style } from "./style.js";
 
 export const login = ({ title, nonce }) => {
   return /*html*/ `<title>${title}</title>
@@ -19,7 +21,9 @@ export const login = ({ title, nonce }) => {
             id="email"
             placeholder="Enter your email" 
             required
-          /><br/>
+          />
+          <p class="email error-message"></p>
+          <br/>
           <label for="password">Password</label>
           <input 
             type="password"  
@@ -27,32 +31,20 @@ export const login = ({ title, nonce }) => {
             id="password"
             placeholder="Enter your password" 
             required
-          /><br/>
+          />
+          <p class="password error-message"></p>
+          <br/>
           <div class="actions">
             <button type="submit">Login</button>
-            <span class="tip">Don't have an account? <a href="/page/signup">Sign up!</a> </span>
+            <span class="tip">Don't have an account? <a href="/signup">Sign up</a> </span>
           </div>
         </form>
       </main>
       ${footer}
+      <script nonce="${nonce}">
+        ${script}
+      </script>
     </body>
     </html>
   `;
 };
-
-const style = /* css */ `
-  h1 {
-    text-align: center;
-  }
-  form {
-    max-width: 500px;
-    margin: 0 auto;
-    background-color: #eee;
-    padding: 20px;
-    border-radius: 10px;
-  }
-  .tip {
-    padding-top: 10px;
-    display: block;
-  }
-`;
