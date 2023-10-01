@@ -70,3 +70,13 @@ export const createLink = async (ctx) => {
     ctx.throw(500, err.message);
   }
 };
+
+export const deleteLink = async (ctx) => {
+  // Get link id from ctx.params
+  // Get user id from ctx.state.user._id
+
+  // Delete link from KV store: links
+  // Delete link from KV store: link-by-user
+
+  ctx.redirect("/user");
+};

@@ -4,6 +4,23 @@ import { userHandler } from "../middlewares/userHandler.js";
 
 export const pageRouter = new Router();
 
+// TODO: move to middleware
+const getLinks = async (ctx, next) => {
+  const records = await ctx.kv.list({
+    prefix: ["link-by-user", ctx.state.user._id],
+  });
+
+  const links = [];
+
+  for await (const link of records) {
+    links.push(link.value);
+  }
+
+  ctx.state.links = links;
+
+  return next();
+};
+
 pageRouter.get(
   "/",
   userHandler,
@@ -27,18 +44,21 @@ pageRouter.get(
   (ctx) => (ctx.body = ctx.render("signup", { title: "Sign up" }))
 );
 
-pageRouter.get("/user", auth, async (ctx) => {
-  const records = await ctx.kv.list({
-    prefix: ["link-by-user", ctx.state.user._id],
+pageRouter.get("/user", auth, getLinks, (ctx) => {
+  // TODO: only pass user and destruct in template
+  ctx.body = ctx.render("user", {
+    title: "User",
+    user: ctx.state.user,
+    links: ctx.state.links,
   });
+});
 
-  const links = [];
-
-  for await (const link of records) {
-    links.push(link.value);
-  }
-
-  ctx.body = ctx.render("user", { title: "User", user: ctx.state.user, links });
+pageRouter.get("/analytics", auth, (ctx) => {
+  // TODO: only pass user and destruct in template
+  ctx.body = ctx.render("analytics", {
+    title: "Analytics",
+    user: ctx.state.user,
+  });
 });
 
 pageRouter.get("/logout", (ctx) => {

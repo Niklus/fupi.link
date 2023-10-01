@@ -20,6 +20,13 @@ const nav = ({ title, user = null }) => {
                   title === "About" ? "active" : ""
                 }' href="/about">About</a>`
           }
+          ${
+            user
+              ? /*html*/ `<a class='${
+                  title === "Analytics" ? "active" : ""
+                }' href="/analytics">Analytics</a>`
+              : ""
+          }
       </div>
       <div class="nav-right">
         ${

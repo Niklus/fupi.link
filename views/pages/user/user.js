@@ -33,7 +33,7 @@ export const user = ({ title, user, nonce, links }) => {
                 <span>Short: </span><a href="${link.shortLink}" target="_blank">${link.shortLink}</a><br/>
                 <span>Long: </span><span>${link.link}</span><br/>
                 <span>Clicks: ${link.clicks}</span><br/>
-                <a href="/api/links/delete/${link._id}" class="delete">Delete</a>
+                <button class="delete">Delete</button> 
               </div><br/>
             `
           )
@@ -72,4 +72,16 @@ const script = await makeScript(() => {
   function removeProtocol(url) {
     return url.replace(/^https?:\/\//i, "");
   }
+
+  // Delete link with confirmation
+  const deleteButton = document.querySelector(".delete");
+
+  deleteButton.addEventListener("click", (e) => {
+    const confirmDelete = confirm("Are you sure you want to delete this link?");
+    if (confirmDelete) {
+      // Delete link
+      // use fetch to make a DELETE request to /api/links/:id
+      // if successful, reload the page, otherwise show an error message
+    }
+  });
 });
