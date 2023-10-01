@@ -1,6 +1,6 @@
 import nav from "../../components/nav.js";
 import footer from "../../components/footer.js";
-import { makeScript } from "../../utils/index.js";
+import { script } from "./script.js";
 import { style } from "./style.js";
 
 export const user = ({ title, user, nonce, links }) => {
@@ -10,23 +10,24 @@ export const user = ({ title, user, nonce, links }) => {
     </style>
     </head>
     <body>
-      ${nav({ title, user })}
-      <main>
-        <h1>${user.email}</h1>
-        <form class="row" action="/api/links/user" method="post">
-          <input 
-            class="col" 
-            type="url"  
-            name="link" 
-            id="link"
-            placeholder="Enter your long URL here" 
-            required
-          />
-          <button class="col" type="submit">Shorten</button>
-        </form>
-      </main>
-      <div class="links">
-        ${links
+      <div class="wrapper">
+        ${nav({ title, user })}
+        <main>
+          <h1>${user.email}</h1>
+          <form class="row" action="/api/links/user" method="post">
+            <input 
+              class="col" 
+              type="url"  
+              name="link" 
+              id="link"
+              placeholder="Enter your long URL here" 
+              required
+            />
+            <button class="col" type="submit">Shorten</button>
+          </form>
+        </main>
+        <div class="links">
+        ${links /**TODO: Sort by createdAt */
           .map(
             (link) => /*html*/ `
               <div class="card">
@@ -38,6 +39,7 @@ export const user = ({ title, user, nonce, links }) => {
             `
           )
           .join("")}
+        </div>
       </div>
       ${footer}
       <script nonce="${nonce}">
@@ -47,41 +49,3 @@ export const user = ({ title, user, nonce, links }) => {
     </html>
   `;
 };
-
-const script = await makeScript(() => {
-  const search = new URLSearchParams(window.location.search);
-  const shortLink = search.get("shortLink");
-  const message = search.get("message");
-
-  if (shortLink) {
-    let linkEl = /* html */ `<a href="${shortLink}" class="shortLink" target="_blank">${removeProtocol(
-      shortLink
-    )}</a>`;
-    rennderEl(linkEl);
-  }
-
-  if (message) {
-    let messageEl = /* html */ `<p class="message">${message}</p>`;
-    rennderEl(messageEl);
-  }
-
-  function rennderEl(el) {
-    document.querySelector("main").insertAdjacentHTML("beforeend", el);
-  }
-
-  function removeProtocol(url) {
-    return url.replace(/^https?:\/\//i, "");
-  }
-
-  // Delete link with confirmation
-  const deleteButton = document.querySelector(".delete");
-
-  deleteButton.addEventListener("click", (e) => {
-    const confirmDelete = confirm("Are you sure you want to delete this link?");
-    if (confirmDelete) {
-      // Delete link
-      // use fetch to make a DELETE request to /api/links/:id
-      // if successful, reload the page, otherwise show an error message
-    }
-  });
-});

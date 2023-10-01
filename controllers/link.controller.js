@@ -71,6 +71,20 @@ export const createLink = async (ctx) => {
   }
 };
 
+export const getLinks = async (ctx) => {
+  const records = await ctx.kv.list({
+    prefix: ["link-by-user", ctx.state.user._id],
+  });
+
+  const links = [];
+
+  for await (const link of records) {
+    links.push(link.value);
+  }
+
+  ctx.body = JSON.stringify(links);
+};
+
 export const deleteLink = async (ctx) => {
   // Get link id from ctx.params
   // Get user id from ctx.state.user._id

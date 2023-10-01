@@ -8,10 +8,12 @@ export const notFound = ({ title, nonce }) => {
     </style>
     </head>
     <body>
-      ${nav({ title })}
-      <main>
-        <h1>${title}: 404</h1>
-      </main>
+      <div class="wrapper">
+        ${nav({ title })}
+        <main>
+          <h1>${title}: 404</h1>
+        </main>
+      </div>
       ${footer}
     </body>
     </html>

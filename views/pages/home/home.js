@@ -10,21 +10,23 @@ export const home = ({ title, nonce }) => {
     </style>
     </head>
     <body>
-      ${nav({ title })}
-      <main>
-        <h1>FupiLink</h1>
-        <form class="row" action="/api/links" method="post">
-          <input 
-            class="col" 
-            type="url"  
-            name="link" 
-            id="link"
-            placeholder="Enter your long URL here" 
-            required
-          />
-          <button class="col" type="submit">Shorten</button>
-        </form>
-      </main>
+      <div class="wrapper">
+        ${nav({ title })}
+        <main>
+          <h1>FupiLink</h1>
+          <form class="row" action="/api/links" method="post">
+            <input 
+              class="col" 
+              type="url"  
+              name="link" 
+              id="link"
+              placeholder="Enter your long URL here" 
+              required
+            />
+            <button class="col" type="submit">Shorten</button>
+          </form>
+        </main>
+      </div>
       ${footer}
       <script nonce="${nonce}">
         ${script}

@@ -4,22 +4,7 @@ import { userHandler } from "../middlewares/userHandler.js";
 
 export const pageRouter = new Router();
 
-// TODO: move to middleware
-const getLinks = async (ctx, next) => {
-  const records = await ctx.kv.list({
-    prefix: ["link-by-user", ctx.state.user._id],
-  });
-
-  const links = [];
-
-  for await (const link of records) {
-    links.push(link.value);
-  }
-
-  ctx.state.links = links;
-
-  return next();
-};
+// TODO: make a pageController and move these there
 
 pageRouter.get(
   "/",
@@ -44,12 +29,22 @@ pageRouter.get(
   (ctx) => (ctx.body = ctx.render("signup", { title: "Sign up" }))
 );
 
-pageRouter.get("/user", auth, getLinks, (ctx) => {
+pageRouter.get("/user", auth, async (ctx) => {
+  const records = await ctx.kv.list({
+    prefix: ["link-by-user", ctx.state.user._id],
+  });
+
+  const links = [];
+
+  for await (const link of records) {
+    links.push(link.value);
+  }
+
   // TODO: only pass user and destruct in template
   ctx.body = ctx.render("user", {
     title: "User",
     user: ctx.state.user,
-    links: ctx.state.links,
+    links,
   });
 });
 

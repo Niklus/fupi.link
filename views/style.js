@@ -3,6 +3,9 @@ import { trim } from "./utils/index.js";
 const css = /* css */ `
   body {
     margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
   }
   
   header {
@@ -14,6 +17,10 @@ const css = /* css */ `
     max-width: 970px;
     margin: 0 auto;
     padding: 1rem;
+  }
+
+  .wrapper {
+    flex: 1;
   }
 
   main {
@@ -29,13 +36,11 @@ const css = /* css */ `
     padding-left: 20px;
   }
 
-  /*footer {
-    position: absolute;
-    bottom: 0;
+  footer {
     width: 100%;
     display: flex;
     justify-content: center;
-    align-items: center;*/
+    align-items: center;
   }
 `;
 
