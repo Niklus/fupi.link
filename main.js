@@ -12,6 +12,7 @@ import notFoundHandler from "./middlewares/notFoundHandler.js";
 import errorHandler from "./middlewares/errorHandler.js";
 import db from "./middlewares/db.js";
 import views from "./middlewares/views.js";
+import keys from "./middlewares/keys.js";
 
 // Load environment variables
 await load({ export: true });
@@ -41,6 +42,7 @@ website
 
 // Host
 host
+  .use(keys)
   .use(db)
   .use(compress())
   .use(security)

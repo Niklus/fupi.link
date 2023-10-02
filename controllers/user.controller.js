@@ -55,6 +55,7 @@ export const signUp = async (ctx) => {
     ctx.cookies.set("token", token, {
       httpOnly: true,
       maxAge: 1000 * 60 * 60 * 24 * 3,
+      signed: true,
     });
 
     ctx.redirect("/user?message=Signed up");
@@ -90,6 +91,7 @@ export const logIn = async (ctx) => {
     ctx.cookies.set("token", token, {
       httpOnly: true,
       maxAge: 1000 * 60 * 60 * 24 * 3,
+      signed: true,
     });
 
     ctx.redirect("/user");

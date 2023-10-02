@@ -10,6 +10,7 @@ export { default as CleanCSS } from "npm:clean-css@5.3.2";
 export { default as Router } from "npm:koa-router@12.0.0";
 export { default as jwt } from "npm:jsonwebtoken@9.0.2";
 export { default as helmet } from "npm:koa-helmet@7.0.2";
+export { default as safeBrowse } from "npm:safe-browse-url-lookup@0.1.1";
 
 // Deno Modules
 export { load } from "https://deno.land/std@0.203.0/dotenv/mod.ts";

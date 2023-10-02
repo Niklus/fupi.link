@@ -1,15 +1,10 @@
 import { nanoid } from "../deps.js";
-import { isURL } from "../deps.js";
 
 export const createLink = async (ctx) => {
   const userId = ctx.state?.user?._id || "anonymous";
 
   try {
     const { body } = ctx.request;
-
-    if (!isURL(body.link) || !body.link) {
-      return ctx.redirect("/?message=" + "Invalid URL");
-    }
 
     let result = await ctx.kv.get(["link-by-user", userId, body.link]);
 
