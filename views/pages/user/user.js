@@ -31,7 +31,7 @@ export const user = ({ title, user, nonce, links, route }) => {
           .map(
             (link) => /*html*/ `
               <div class="card">
-                <button class="delete">Delete</button> 
+                <button class="delete" data-id="${link.linkId}" data-link="${link.link}">Delete</button> 
                 <span>Short: </span><a href="${link.shortLink}" target="_blank">${link.shortLink}</a><br/>
                 <span>Long: </span><span>${link.link}</span><br/>
                 <span>Clicks: ${link.clicks}</span><br/>

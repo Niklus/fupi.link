@@ -31,9 +31,26 @@ export const script = await makeScript(() => {
   deleteButton.addEventListener("click", (e) => {
     const confirmDelete = confirm("Are you sure you want to delete this link?");
     if (confirmDelete) {
-      // Delete link
-      // use fetch to make a DELETE request to /api/links/:id
-      // if successful, reload the page, otherwise show an error message
+      fetch("/api/links/delete", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          link: e.target.dataset.link,
+          linkId: e.target.dataset.id,
+        }),
+      })
+        .then((res) => {
+          if (res.ok) {
+            window.location.reload();
+          } else {
+            throw new Error("Something went wrong");
+          }
+        })
+        .catch((err) => {
+          alert(err.message);
+        });
     }
   });
 });

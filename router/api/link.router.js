@@ -21,4 +21,4 @@ linkRouter.post("/user", auth, linkHandler, createLink);
 linkRouter.get("/user", auth, getLinks);
 
 // delete private link
-linkRouter.del("/:linkId", auth, deleteLink);
+linkRouter.post("/delete", auth, deleteLink);

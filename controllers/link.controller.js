@@ -81,11 +81,33 @@ export const getLinks = async (ctx) => {
 };
 
 export const deleteLink = async (ctx) => {
-  // Get link id from ctx.params
-  // Get user id from ctx.state.user._id
+  if (!ctx.state.user._id || ctx.state.user._id == "anonymous") {
+    return ctx.throw(400, "Unauthorized");
+  }
 
-  // Delete link from KV store: links
-  // Delete link from KV store: link-by-user
+  const linkId = ctx.request.body.linkId;
+  const link = ctx.request.body.link;
 
-  ctx.redirect("/user");
+  if (!linkId || !link) {
+    return ctx.throw(400, "Missing linkId or link");
+  }
+
+  try {
+    const primaryKey = ["links", linkId];
+    const secondaryKey = ["link-by-user", ctx.state.user._id, link];
+
+    const res = await ctx.kv
+      .atomic()
+      .delete(primaryKey)
+      .delete(secondaryKey)
+      .commit();
+
+    if (!res.ok) {
+      throw new Error("Failed to delete link");
+    }
+
+    ctx.body = JSON.stringify({ ok: true });
+  } catch (err) {
+    ctx.throw(500, err.message);
+  }
 };
