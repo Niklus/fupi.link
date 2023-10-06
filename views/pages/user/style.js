@@ -30,6 +30,10 @@ const css = /* css */ `
     text-align: center;
     display: block;
   }
+
+  button {
+    float: right;
+  }
 `;
 
 export const style = trim(css);

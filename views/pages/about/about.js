@@ -1,7 +1,7 @@
 import nav from "../../components/nav.js";
 import footer from "../../components/footer.js";
 
-export const about = ({ title, nonce }) => {
+export const about = ({ title, nonce, route }) => {
   return /*html*/ `<title>${title}</title>
     <style nonce="${nonce}">
       ${style}
@@ -9,7 +9,7 @@ export const about = ({ title, nonce }) => {
     </head>
     <body>
       <div class="wrapper">
-        ${nav({ title })}
+        ${nav({ title, route })}
         <main>
           <h1>${title}</h1>
         </main>

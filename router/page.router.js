@@ -9,12 +9,12 @@ export const pageRouter = new Router();
 pageRouter.get(
   "/",
   userHandler,
-  (ctx) => (ctx.body = ctx.render("home", { title: "Home" }))
+  (ctx) => (ctx.body = ctx.render("home", { title: "Home", route: "/" }))
 );
 
 pageRouter.get(
   "/about",
-  (ctx) => (ctx.body = ctx.render("about", { title: "About" }))
+  (ctx) => (ctx.body = ctx.render("about", { title: "About", route: "/about" }))
 );
 
 pageRouter.get(
@@ -45,6 +45,7 @@ pageRouter.get("/user", auth, async (ctx) => {
     title: "User",
     user: ctx.state.user,
     links,
+    route: "/user",
   });
 });
 
@@ -53,6 +54,7 @@ pageRouter.get("/analytics", auth, (ctx) => {
   ctx.body = ctx.render("analytics", {
     title: "Analytics",
     user: ctx.state.user,
+    route: "/analytics",
   });
 });
 

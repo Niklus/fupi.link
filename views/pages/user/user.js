@@ -3,7 +3,7 @@ import footer from "../../components/footer.js";
 import { script } from "./script.js";
 import { style } from "./style.js";
 
-export const user = ({ title, user, nonce, links }) => {
+export const user = ({ title, user, nonce, links, route }) => {
   return /*html*/ `<title>${title}</title>
     <style nonce="${nonce}">
       ${style}
@@ -11,7 +11,7 @@ export const user = ({ title, user, nonce, links }) => {
     </head>
     <body>
       <div class="wrapper">
-        ${nav({ title, user })}
+        ${nav({ title, user, route })}
         <main>
           <h1>${user.email}</h1>
           <form class="row" action="/api/links/user" method="post">
@@ -31,10 +31,10 @@ export const user = ({ title, user, nonce, links }) => {
           .map(
             (link) => /*html*/ `
               <div class="card">
+                <button class="delete">Delete</button> 
                 <span>Short: </span><a href="${link.shortLink}" target="_blank">${link.shortLink}</a><br/>
                 <span>Long: </span><span>${link.link}</span><br/>
                 <span>Clicks: ${link.clicks}</span><br/>
-                <button class="delete">Delete</button> 
               </div><br/>
             `
           )

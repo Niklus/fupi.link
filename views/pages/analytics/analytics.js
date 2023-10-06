@@ -3,7 +3,7 @@ import footer from "../../components/footer.js";
 import { style } from "./style.js";
 import { script } from "./script.js";
 
-export const analytics = ({ title, user, nonce }) => {
+export const analytics = ({ title, user, nonce, route }) => {
   return /*html*/ `<title>${title}</title>
     <script src="/chart.umd.min.js"></script>
     <style nonce="${nonce}">
@@ -12,7 +12,7 @@ export const analytics = ({ title, user, nonce }) => {
     </head>
     <body>
       <div class="wrapper">
-        ${nav({ title, user })}
+        ${nav({ title, user, route })}
         <div class="selection">
           <select id="chart-type">
             <option value="bar">Bar</option>

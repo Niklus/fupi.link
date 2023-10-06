@@ -1,7 +1,7 @@
 import nav from "../../components/nav.js";
 import footer from "../../components/footer.js";
 
-export const notFound = ({ title, nonce }) => {
+export const notFound = ({ title, nonce, route }) => {
   return /*html*/ `<title>${title}</title>
     <style nonce="${nonce}">
       ${style}

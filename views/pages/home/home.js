@@ -3,7 +3,7 @@ import footer from "../../components/footer.js";
 import { style } from "./style.js";
 import { script } from "./script.js";
 
-export const home = ({ title, nonce }) => {
+export const home = ({ title, nonce, route }) => {
   return /*html*/ `<title>${title}</title>
     <style nonce="${nonce}">
       ${style}
@@ -11,7 +11,7 @@ export const home = ({ title, nonce }) => {
     </head>
     <body>
       <div class="wrapper">
-        ${nav({ title })}
+        ${nav({ title, route })}
         <main>
           <h1>FupiLink</h1>
           <form class="row" action="/api/links" method="post">

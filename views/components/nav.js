@@ -1,4 +1,6 @@
-const nav = ({ title, user = null }) => {
+import { isActiveRoute } from "../utils/index.js";
+
+const nav = ({ title, user = null, route }) => {
   return /*html*/ `<header>
     <nav class="nav">
       <div class="nav-left">
@@ -6,23 +8,23 @@ const nav = ({ title, user = null }) => {
         ${
           user
             ? ""
-            : /*html*/ `<a class='${
-                title === "Home" ? "active" : ""
-              }' href="/">Home</a>`
+            : `<a class='${isActiveRoute("/", route)}' href="/">Home</a>`
         }
-        <a class='${title === "User" ? "active" : ""}' href="/user">My Links</a>
+        <a class='${isActiveRoute("/user", route)}' href="/user">My Links</a>
         ${
           user
             ? ""
-            : /*html*/ `<a class='${
-                title === "About" ? "active" : ""
-              }' href="/about">About</a>`
+            : `<a class='${isActiveRoute(
+                "/about",
+                route
+              )}' href="/about">About</a>`
         }
         ${
           user
-            ? /*html*/ `<a class='${
-                title === "Analytics" ? "active" : ""
-              }' href="/analytics">Analytics</a>`
+            ? `<a class='${isActiveRoute(
+                "/analytics",
+                route
+              )}' href="/analytics">Analytics</a>`
             : ""
         }
       </div>
