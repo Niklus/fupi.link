@@ -1,5 +1,5 @@
 export const goToLandingPage = (ctx) => {
-  ctx.redirect("http://127.0.0.1:3000"); // TODO: change to fupilink.com
+  ctx.redirect("https://fupilink.com");
 };
 
 export const goToLink = async (ctx) => {
@@ -9,7 +9,7 @@ export const goToLink = async (ctx) => {
 
     if (!item?.value) {
       return ctx.redirect(
-        "http://127.0.0.1:3000/?message=" + "Link not found. Create a new one?"
+        "https://fupilink.com/?message=" + "Link not found. Create a new one?"
       );
     }
 

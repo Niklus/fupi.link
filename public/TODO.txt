@@ -1,1 +1,0 @@
-Serve Chota and Chart.js from a cdn: jsdelvr e.t.c

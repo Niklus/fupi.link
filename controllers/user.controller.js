@@ -100,4 +100,25 @@ export const logIn = async (ctx) => {
   }
 };
 
-export const deleteUser = async (ctx) => {};
+export const deleteUser = async (ctx) => {
+  try {
+    const { _id } = ctx.state.user;
+
+    const primaryKey = ["user", _id];
+    const secondaryKey = ["user-by-email", ctx.state.user.email];
+
+    const res = await ctx.kv
+      .atomic()
+      .delete(primaryKey)
+      .delete(secondaryKey)
+      .commit();
+
+    if (!res.ok) {
+      throw new Error("Failed to delete user");
+    }
+
+    ctx.redirect("/?message=Deleted user");
+  } catch (err) {
+    ctx.throw(500, err);
+  }
+};

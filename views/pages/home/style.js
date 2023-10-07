@@ -1,7 +1,7 @@
 import { trim } from "../../utils/index.js";
 
 const css = /* css */ `
-  h1  {
+  h1, p  {
     text-align: center;
   }
 

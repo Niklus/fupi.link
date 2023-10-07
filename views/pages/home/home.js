@@ -14,6 +14,7 @@ export const home = ({ title, nonce, route }) => {
         ${nav({ title, route })}
         <main>
           <h1>FupiLink</h1>
+          <p>Welcome to FupiLink, a free and open source URL shortener.</p>
           <form class="row" action="/api/links" method="post">
             <input 
               class="col" 

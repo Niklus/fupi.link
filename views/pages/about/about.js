@@ -12,6 +12,11 @@ export const about = ({ title, nonce, route }) => {
         ${nav({ title, route })}
         <main>
           <h1>${title}</h1>
+          <p>
+            FupiLink is a free and open source URL shortener. It is written in
+            JavaScript and uses Deno, koa, and Chart.js. Features include user
+            authentication, link creation, and link analytics.
+          </p>
         </main>
       </div>
       ${footer}
@@ -21,7 +26,10 @@ export const about = ({ title, nonce, route }) => {
 };
 
 const style = /* css */ `
-  h1 {
+  h1, p {
     text-align: center;
+  }
+  main {
+    max-width: 600px;
   }
 `;

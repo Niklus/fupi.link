@@ -48,8 +48,8 @@ host
   .use(security)
   .use(logger())
   .use(serve("./public"))
-  .use(vhost(/localhost/i, linker)) // for fupi.link
-  .use(vhost("127.0.0.1", website)) // for fupilink.com
+  .use(vhost("fupi.link", linker))
+  .use(vhost("fupilink.com", website))
   .use(notFoundHandler)
   .on("error", errorHandler)
   .listen(PORT, () => {
