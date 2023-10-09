@@ -1,7 +1,10 @@
 import { jwt } from "../deps.js";
 import { isEmail } from "../deps.js";
-import { bcrypt } from "../deps.js";
 import { nanoid } from "../deps.js";
+import { crypto } from "../deps.js";
+import { util } from "../deps.js";
+
+const scrypt = util.promisify(crypto.scrypt);
 
 const createToken = (_id) => {
   return jwt.sign({ _id }, Deno.env.get("JWT_SECRET"), { expiresIn: "3d" });
@@ -27,14 +30,14 @@ export const signUp = async (ctx) => {
       return ctx.redirect("/signup?error=email&msg=Email already exists");
     }
 
-    const salt = await bcrypt.genSalt(10);
-    const hash = await bcrypt.hash(password, salt);
+    const salt = crypto.randomBytes(8).toString("hex");
+    const buf = await scrypt(password, salt, 64);
     const _id = nanoid(10);
 
     const user = {
       _id,
       email,
-      password: hash,
+      password: `${buf.toString("hex")}.${salt}`,
     };
 
     const primaryKey = ["user", _id];
@@ -60,8 +63,7 @@ export const signUp = async (ctx) => {
 
     ctx.redirect("/user?message=Signed up");
   } catch (err) {
-    // ctx.throw(500, err);
-    ctx.body = err.message;
+    ctx.throw(500, err);
   }
 };
 
@@ -79,9 +81,12 @@ export const logIn = async (ctx) => {
       return ctx.redirect("/login?error=email&msg=Email not found");
     }
 
-    const { _id, password: hash } = result.value;
+    const { _id, password: savedPassword } = result.value;
 
-    const match = await bcrypt.compare(password, hash);
+    const [hashed, salt] = savedPassword.split(".");
+    const hashedProvided = await scrypt(password, salt, 64);
+
+    const match = hashed === hashedProvided.toString("hex");
 
     if (!match) {
       return ctx.redirect("/login?error=password&msg=Incorrect password");

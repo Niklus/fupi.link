@@ -11,10 +11,11 @@ export { default as Router } from "npm:koa-router@12.0.0";
 export { default as jwt } from "npm:jsonwebtoken@9.0.2";
 export { default as helmet } from "npm:koa-helmet@7.0.2";
 export { default as safeBrowse } from "npm:safe-browse-url-lookup@0.1.1";
+export { default as util } from "npm:util@0.12.5";
 
 // Deno Modules
 export { load } from "https://deno.land/std@0.203.0/dotenv/mod.ts";
-export * as bcrypt from "https://deno.land/x/bcrypt/mod.ts";
-export { nanoid } from "https://deno.land/x/nanoid/mod.ts";
-export { default as isEmail } from "https://deno.land/x/deno_validator/lib/isEmail.ts";
-export { default as isURL } from "https://deno.land/x/deno_validator/lib/isURL.ts";
+export { nanoid } from "https://deno.land/x/nanoid@v3.0.0/mod.ts";
+export { default as isEmail } from "https://deno.land/x/deno_validator@v0.0.5/lib/isEmail.ts";
+export { default as isURL } from "https://deno.land/x/deno_validator@v0.0.5/lib/isURL.ts";
+export * as crypto from "https://deno.land/std@0.177.0/node/crypto.ts";
