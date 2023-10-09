@@ -11,11 +11,11 @@ const security = (ctx, next) => {
         scriptSrc: ["'self'", `'nonce-${ctx.state.nonce}'`],
         styleSrc: ["'self'", `'nonce-${ctx.state.nonce}'`],
         scriptSrcElem: [
-          "'https://cdnjs.cloudflare.com'",
+          "https://cdnjs.cloudflare.com",
           `'nonce-${ctx.state.nonce}'`,
         ],
         styleSrcElem: [
-          "'https://cdn.jsdelivr.net'",
+          "https://cdn.jsdelivr.net",
           `'nonce-${ctx.state.nonce}'`,
         ],
       },
