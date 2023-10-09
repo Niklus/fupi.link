@@ -60,7 +60,8 @@ export const signUp = async (ctx) => {
 
     ctx.redirect("/user?message=Signed up");
   } catch (err) {
-    ctx.throw(500, err);
+    // ctx.throw(500, err);
+    ctx.body = err.message;
   }
 };
 
