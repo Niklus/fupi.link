@@ -49,7 +49,7 @@ host
   .use(logger())
   .use(serve("./public"))
   .use(vhost("fupi.link", linker))
-  .use(vhost("fupilink.com", website))
+  .use(vhost("fupilink.deno.dev", website))
   .use(notFoundHandler)
   .on("error", errorHandler)
   .listen(PORT, () => {

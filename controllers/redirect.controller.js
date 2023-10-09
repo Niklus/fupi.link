@@ -1,5 +1,5 @@
 export const goToLandingPage = (ctx) => {
-  ctx.redirect("https://fupilink.com");
+  ctx.redirect("https://fupilink.deno.dev");
 };
 
 export const goToLink = async (ctx) => {
@@ -9,7 +9,7 @@ export const goToLink = async (ctx) => {
 
     if (!item?.value) {
       return ctx.redirect(
-        "https://fupilink.com/?message=" + "Link not found. Create a new one?"
+        "https://fupilink.deno.dev/?message=" + "Link not found. Create a new one?"
       );
     }
 
