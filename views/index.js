@@ -8,7 +8,7 @@ export default (ctx) => {
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="description" content="Fupilink Url Shortener">
-        <link rel="stylesheet" href="/chota.min.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/niklus/chota/@0.9.2/chota.min.css">
         <style nonce="${ctx.state.nonce}">
           ${style}
         </style>
