@@ -40,8 +40,6 @@ export const signUp = async (ctx) => {
 
     const res = await ctx.kv
       .atomic()
-      .check({ key: primaryKey, versionstamp: null })
-      .check({ key: secondaryKey, versionstamp: null })
       .set(primaryKey, user)
       .set(secondaryKey, user)
       .commit();

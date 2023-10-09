@@ -46,8 +46,6 @@ export const createLink = async (ctx) => {
 
     const res = await ctx.kv
       .atomic()
-      .check({ key: primaryKey, versionstamp: null })
-      .check({ key: secondaryKey, versionstamp: null })
       .set(primaryKey, link)
       .set(secondaryKey, link)
       .commit();
