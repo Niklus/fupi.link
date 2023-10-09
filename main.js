@@ -31,6 +31,7 @@ linker
 
 // Website
 website
+  .use(serve("./public"))
   .use(koaBody())
   .use(views)
   .use(router.pageRouter.routes())
@@ -47,7 +48,6 @@ host
   .use(compress())
   .use(security)
   .use(logger())
-  .use(serve("./public"))
   .use(vhost("fupi.link", linker))
   .use(vhost("fupilink.deno.dev", website))
   .use(notFoundHandler)
