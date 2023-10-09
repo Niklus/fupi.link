@@ -4,10 +4,11 @@ import { helmet } from "../deps.js";
 const security = (ctx, next) => {
   ctx.state.nonce = nanoid(32);
   return helmet({
+    crossOriginResourcePolicy: false,
     contentSecurityPolicy: {
       directives: {
-        scriptSrc: [`'nonce-${ctx.state.nonce}'`, "*cdnjs.cloudflare.com"],
-        styleSrc: [`'nonce-${ctx.state.nonce}'`, "*.cdn.jsdelivr.net"],
+        scriptSrc: ["'self'", `'nonce-${ctx.state.nonce}'`],
+        styleSrc: ["'self'", `'nonce-${ctx.state.nonce}'`],
       },
     },
   })(ctx, next);
