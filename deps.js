@@ -12,6 +12,7 @@ export { default as jwt } from "npm:jsonwebtoken@9.0.2";
 export { default as helmet } from "npm:koa-helmet@7.0.2";
 export { default as safeBrowse } from "npm:safe-browse-url-lookup@0.1.1";
 export { default as util } from "npm:util@0.12.5";
+export { default as RateLimit } from "npm:koa2-ratelimit@1.1.3";
 
 // Deno Modules
 export { load } from "https://deno.land/std@0.203.0/dotenv/mod.ts";

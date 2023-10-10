@@ -13,6 +13,7 @@ import errorHandler from "./middlewares/errorHandler.js";
 import db from "./middlewares/db.js";
 import views from "./middlewares/views.js";
 import keys from "./middlewares/keys.js";
+import limiter from "./middlewares/limiter.js";
 
 // Load environment variables
 await load({ export: true });
@@ -31,7 +32,7 @@ linker
 
 // Website
 website
-  .use(serve("./public"))
+  .use(serve(`${Deno.cwd()}/public`))
   .use(koaBody())
   .use(views)
   .use(router.pageRouter.routes())
@@ -43,6 +44,7 @@ website
 
 // Host
 host
+  .use(limiter)
   .use(keys)
   .use(db)
   .use(compress())

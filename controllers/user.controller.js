@@ -24,8 +24,6 @@ export const signUp = async (ctx) => {
 
     const result = await ctx.kv.get(["user-by-email", email]);
 
-    console.log("result: ", result);
-
     if (result.value) {
       return ctx.redirect("/signup?error=email&msg=Email already exists");
     }
