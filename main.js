@@ -13,7 +13,7 @@ import errorHandler from "./middlewares/errorHandler.js";
 import db from "./middlewares/db.js";
 import views from "./middlewares/views.js";
 import keys from "./middlewares/keys.js";
-import limiter from "./middlewares/limiter.js";
+import { limiter } from "./middlewares/limiter.js";
 
 // Load environment variables
 await load({ export: true });
