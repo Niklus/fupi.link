@@ -1,4 +1,8 @@
-# FupiLink Final Draft
+# FupiLink
+
+FupiLink is a free and open source URL shortener. It is written in JavaScript and uses Deno, koa, and Chart.js. 
+Features include user authentication, link creation, and link analytics.
+Fupi means short in swahili 😊
 
 ## Installation
 
