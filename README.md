@@ -12,8 +12,10 @@ curl -fsSL https://deno.land/x/install/install.sh | sh
 
 ## Usage
 
+Deno KV is currently experimental and subject to change. Executing Deno programs localy that use KV currently requires the --unstable flag, as below:
+
 ```bash
-deno run -A main.js
+deno run -A --unstable main.js
 ```
 
 ## TODO:
