@@ -32,7 +32,6 @@ linker
 
 // Website
 website
-  .use(serve(`${Deno.cwd()}/public`))
   .use(koaBody())
   .use(views)
   .use(router.pageRouter.routes())
@@ -48,10 +47,11 @@ host
   .use(keys)
   .use(db)
   .use(compress())
+  .use(serve(`${Deno.cwd()}/public`))
   .use(security)
   .use(logger())
   .use(vhost("fupi.link", linker))
-  .use(vhost("fupilink.deno.dev", website))
+  .use(vhost("fupilink.deno.dev", website)) // Change later to fupilink.com
   .use(notFoundHandler)
   .on("error", errorHandler)
   .listen(PORT, () => {
