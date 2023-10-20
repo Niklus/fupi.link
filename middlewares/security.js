@@ -4,7 +4,6 @@ import { helmet } from "../deps.js";
 const security = (ctx, next) => {
   ctx.state.nonce = nanoid(32);
   return helmet({
-    // crossOriginResourcePolicy: false,
     contentSecurityPolicy: {
       directives: {
         defaultSrc: ["'self'"],
@@ -17,6 +16,11 @@ const security = (ctx, next) => {
         styleSrcElem: [
           "https://cdn.jsdelivr.net",
           `'nonce-${ctx.state.nonce}'`,
+        ],
+        imgSrc: [
+          "'self'",
+          "data:",
+          "https://cdn.jsdelivr.net",
         ],
       },
     },
