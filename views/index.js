@@ -8,6 +8,11 @@ export default (ctx) => {
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="description" content="Fupilink Url Shortener">
+        <link 
+          rel="icon" 
+          type="image/x-icon" 
+          href="https://cdn.jsdelivr.net/gh/Niklus/assets@main/favicon.ico"
+        />
         <link nonce="${
           ctx.state.nonce
         }" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/niklus/chota/@0.9.2/chota.min.css">
