@@ -5,7 +5,7 @@ import { script } from "./script.js";
 
 export const analytics = ({ title, user, nonce, route }) => {
   return /*html*/ `<title>${title}</title>
-    <script nonce=${nonce} src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
     <style nonce="${nonce}">
       ${style}
     </style>

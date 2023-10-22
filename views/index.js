@@ -13,9 +13,7 @@ export default (ctx) => {
           type="image/x-icon" 
           href="https://cdn.jsdelivr.net/gh/Niklus/assets@main/favicon.ico"
         />
-        <link nonce="${
-          ctx.state.nonce
-        }" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/niklus/chota/@0.9.2/chota.min.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/niklus/chota/@0.9.2/chota.min.css">
         <style nonce="${ctx.state.nonce}">
           ${style}
         </style>
