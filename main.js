@@ -50,7 +50,7 @@ host
   .use(serve(`${Deno.cwd()}/public`))
   .use(security)
   .use(logger())
-  // .use(vhost("fupi.link", linker))
+  .use(vhost("fupilink.deno.dev", linker)) // CHANGE TO fupi.link later
   .use(vhost("fupilink.deno.dev", website)) // Change later to fupilink.com
   .use(notFoundHandler)
   .on("error", errorHandler)
