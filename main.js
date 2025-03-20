@@ -21,7 +21,7 @@ await load({ export: true });
 const PORT = Deno.env.get("PORT");
 
 // Apps
-const linker = new Koa();
+// const linker = new Koa();
 const website = new Koa();
 const host = new Koa();
 
@@ -50,7 +50,7 @@ host
   .use(serve(`${Deno.cwd()}/public`))
   .use(security)
   .use(logger())
-  .use(vhost("fupi.link", linker))
+  // .use(vhost("fupi.link", linker))
   .use(vhost("fupilink.deno.dev", website)) // Change later to fupilink.com
   .use(notFoundHandler)
   .on("error", errorHandler)
