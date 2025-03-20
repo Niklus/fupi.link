@@ -21,14 +21,14 @@ await load({ export: true });
 const PORT = Deno.env.get("PORT");
 
 // Apps
-// const linker = new Koa();
+const linker = new Koa();
 const website = new Koa();
 const host = new Koa();
 
-/* Link Redirector
+// Link Redirector
 linker
   .use(router.redirectRouter.routes())
-  .use(router.redirectRouter.allowedMethods());*/
+  .use(router.redirectRouter.allowedMethods());
 
 // Website
 website
