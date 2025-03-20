@@ -25,10 +25,10 @@ const PORT = Deno.env.get("PORT");
 const website = new Koa();
 const host = new Koa();
 
-// Link Redirector
+/* Link Redirector
 linker
   .use(router.redirectRouter.routes())
-  .use(router.redirectRouter.allowedMethods());
+  .use(router.redirectRouter.allowedMethods());*/
 
 // Website
 website
